@@ -1,0 +1,145 @@
+/* Global Styles
+================================*/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===============================
+Header
+================================*/
+.site-header {
+    background-color: #2b2d42;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    align-items: center;
+}
+
+.site-header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* ===============================
+Tab Bar (TCG Style)
+================================*/
+.tab-bar {
+    display: flex;
+    background-color: #ffffff;
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    gap: 20px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.tab-bar a {
+    padding: 8px 14px;
+    color: #333;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.tab-bar a:hover {
+    color: #1976d2;
+}
+
+.tab-bar a.active {
+    border-bottom-color: #1976d2;
+    color: #1976d2;
+}
+
+/* ===============================
+Results Section
+================================*/
+.results-section {
+    max-width: 1250px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.results-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* ===============================
+Card Grid
+================================*/
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* ===============================
+Card Style
+================================*/
+.card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.22);
+}
+
+.card-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    background-color: #eee;
+}
+
+.card-info {
+    padding: 12px 15px;
+}
+
+.card-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.card-set {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b2d42;
+}
+
+.market-price {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ===============================
+Footer (Optional)
+================================*/
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    color: #777;
+}
