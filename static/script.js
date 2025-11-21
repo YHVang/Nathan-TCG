@@ -65,3 +65,7 @@ tabs.forEach(tab => {
         renderCards(filtered);
     });
 });
+
+function menuFunction(x) {
+    x.classList.toggle("change");
+}
