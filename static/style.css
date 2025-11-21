@@ -185,6 +185,12 @@ Card Style
     margin-bottom: 10px;
 }
 
+.card-number {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
 .price {
     font-size: 15px;
     font-weight: 600;
