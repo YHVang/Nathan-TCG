@@ -10,11 +10,16 @@ function renderCards(filteredCards) {
                 <div class="card">
                     <img class="card-img" src="${card.img}" alt="${card.name}">
                     <div class="card-info">
-                        <h3 class="card-name">${card.name}</h3>
-                        <p class="card-set">${card.set}</p>
-                        <p class="card-number">${card.number}</p>
-                        <p class="price"><strong>Price:</strong> ${card.price}</p>
-                        <p class="market-price"><strong>Market:</strong> ${card.marketPrice}</p>
+                        <div class="card-details">
+                            <h3 class="card-name">${card.name}</h3>
+                            <p class="card-set">${card.set}</p>
+                            <p class="card-number">${card.number}</p>
+                        </div>
+
+                        <div class="card-prices">
+                            <p class="price"><strong>Price:</strong> ${card.price}</p>
+                            <p class="market-price"><strong>Market:</strong> ${card.marketPrice}</p>
+                        </div>
                     </div>
                 </div>
             </a>
