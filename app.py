@@ -44,7 +44,7 @@ cards = [
         "number": "OP10-005",
         "price": "$2,499.99",
         "marketPrice": "$2,330.00",
-        "img": "/static/images/pokemon-base-set-shadowless.jpg",
+        "img": "/static/images/sanji-treasure-cup-2025.jpg",
         "category": "singles"
     },
     {

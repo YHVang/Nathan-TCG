@@ -142,6 +142,24 @@ Card Grid
 /* ===============================
 Card Style
 ================================*/
+
+.card-grid img {
+    width: auto;
+    /* keep natural width */
+    height: auto;
+    /* keep natural height */
+    max-width: 144px;
+    /* maximum width of the image */
+    max-height: 210px;
+    /* maximum height of the image */
+    object-fit: contain;
+    /* ensures the whole image fits inside the box without cropping */
+    display: block;
+    /* removes inline spacing issues */
+    margin: 0 auto;
+    /* centers image horizontally in the card */
+}
+
 .card {
     background-color: white;
     border-radius: 8px;
@@ -149,6 +167,10 @@ Card Style
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    /* fixed height for all cards */
 }
 
 .card:hover {
@@ -158,7 +180,7 @@ Card Style
 
 .card-img {
     width: 100%;
-    height: 320px;
+    height: 210px;
     object-fit: contain;
     /* keeps entire image visible */
     background-color: #eee;
@@ -171,6 +193,12 @@ Card Style
 
 .card-info {
     padding: 12px 15px;
+    flex: 1;
+    /* fills remaining space in card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* evenly distributes info content */
 }
 
 .card-name {
