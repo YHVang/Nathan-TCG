@@ -4,42 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ card.name }}</title>
+    <title>{{ card.name }} - Nathan's TCG</title>
 
-    <link rel="stylesheet" href="/static/style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
     <!-- Header -->
     <header class="site-header">
-        <h1>{{ card.name }}</h1>
+        <h1>TCG</h1>
     </header>
 
-    <main class="item-container">
-        <!-- Item Image -->
-        <div class="item-image">
-            <img src="{{ card.img }}" alt="{{ card.name }}">
+    <!-- Tab Bar (optional: keep consistent with index.html) -->
+    <nav class="tab-bar">
+        <div class="tab-links">
+            <a href="/admin"><i class="fa fa-home w3-xlarge"></i></a>
+
+            <a class="active" href="#" data-tab="all">All</a>
+            <a href="#" data-tab="singles">Singles</a>
+            <a href="#" data-tab="sealed">Sealed Products</a>
         </div>
-
-        <!-- Item Details -->
-        <div class="item-details">
-            <h2>{{ card.name }}</h2>
-
-            <p><strong>Set:</strong> {{ card.set }}</p>
-
-            {% if card.number %}
-            <p><strong>Card Number:</strong> {{ card.number }}</p>
-            {% endif %}
-
-            <p><strong>Price:</strong> {{ card.price }}</p>
-            <p><strong>Market Price:</strong> {{ card.marketPrice }}</p>
-
-            <p><strong>Category:</strong> {{ card.category }}</p>
-
-            <a href="/" class="back-button">← Back to Search</a>
+        <form action="/search" method="get">
+            <label for="search-input"></label>
+            <input type="search" id="search-input" name="q" placeholder="Enter your search" />
+            <button type="submit" class="search-button">Search</button>
+        </form>
+        <div class="menu-bar" onclick="menuFunction(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
         </div>
-    </main>
+    </nav>
+
+    <!-- Item Section -->
+    <section class="results-section">
+        <h2 class="results-title">{{ card.name }}</h2>
+
+        <div class="card">
+            <img class="card-img" src="{{ card.img }}" alt="{{ card.name }}">
+            <div class="card-info">
+                <h3 class="card-name">{{ card.name }}</h3>
+                <p class="card-set"><strong>Set:</strong> {{ card.set }}</p>
+                {% if card.number %}
+                <p class="card-number"><strong>Number:</strong> {{ card.number }}</p>
+                {% endif %}
+                <p class="price"><strong>Price:</strong> {{ card.price }}</p>
+                <p class="market-price"><strong>Market:</strong> {{ card.marketPrice }}</p>
+                {% if card.category %}
+                <p class="card-category"><strong>Category:</strong> {{ card.category }}</p>
+                {% endif %}
+                <a href="/" class="back-button">← Back to Search</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Nathan's TCG
+    </footer>
+    <!-- Link JS from static folder -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 
