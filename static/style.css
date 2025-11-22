@@ -278,3 +278,36 @@ footer {
     margin-top: 50px;
     color: #777;
 }
+
+/* Mobile-specific overrides */
+@media (max-width: 480px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        /* single column for mobile */
+        gap: 10px;
+    }
+
+    .card {
+        height: auto;
+        /* let card height adjust to content */
+    }
+
+    .site-header {
+        flex-direction: column;
+        /* stack logo/title vertically */
+        align-items: flex-start;
+        padding: 12px 15px;
+    }
+
+    .tab-bar {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .card-img {
+        max-width: 100%;
+        height: auto;
+        /* images scale down */
+    }
+}
