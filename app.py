@@ -76,6 +76,10 @@ def home():
 def admin():
     return render_template("admin.html")
 
+@app.route("/home")
+def main():
+    return render_template("home.html", cards_json=cards)
+
 from flask import request
 
 @app.route("/item")

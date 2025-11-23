@@ -31,22 +31,25 @@ function renderCards(filteredCards) {
 // Initial render
 renderCards(cards);
 
-// Tab filtering (only for pages with a card container)
-const tabs = document.querySelectorAll(".tab-bar a[data-tab]");
-tabs.forEach(tab => {
-    tab.addEventListener("click", e => {
-        e.preventDefault();
+// Tab filtering (only attach if #card-container exists)
+const cardContainer = document.getElementById("card-container");
+if (cardContainer) {
+    const tabs = document.querySelectorAll(".tab-bar a[data-tab]");
+    tabs.forEach(tab => {
+        tab.addEventListener("click", e => {
+            e.preventDefault(); // Only prevent if filtering cards
 
-        // Set active tab
-        tabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
+            // Set active tab
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
 
-        // Filter and render cards
-        const category = tab.getAttribute("data-tab");
-        const filtered = category === "all" ? cards : cards.filter(c => c.category === category);
-        renderCards(filtered);
+            // Filter and render cards
+            const category = tab.getAttribute("data-tab");
+            const filtered = category === "all" ? cards : cards.filter(c => c.category === category);
+            renderCards(filtered);
+        });
     });
-});
+}
 
 // Menu toggle function
 function menuFunction(x) {

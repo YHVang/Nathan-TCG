@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nathan's TCG</title>
     <!-- Link CSS from static folder -->
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -19,6 +21,8 @@
     <!-- Tab Bar -->
     <nav class="tab-bar">
         <div class="tab-links">
+            <a href="/home"><i class="fa fa-home w3-xlarge"></i>
+            </a>
             <a class="active" href="/" data-tab="all">All</a>
             <a href="#" data-tab="singles">Singles</a>
             <a href="#" data-tab="sealed">Sealed Products</a>
@@ -29,6 +33,11 @@
             <input type="search" id="search-input" name="q" placeholder="Enter your search" />
             <button type="submit" class="search-button">Search</button>
         </form>
+        <div class="menu-bar" onclick="menuFunction(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
     </nav>
 
     <!-- Search Results Section -->
@@ -42,6 +51,8 @@
     <section class="results-section">
         <div>
             <h1>Admin information goes here</h1>
+            <h1>Right now All "/" links here</h1>
+            <h1>Will go to index, which will be home webpage for now.</h1>
         </div>
     </section>
 
@@ -52,7 +63,8 @@
     </footer>
 
     <!-- Link JS from static folder -->
-    <script src="static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 
 
 </body>

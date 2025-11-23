@@ -53,17 +53,19 @@ Tab Bar (TCG Style)
 .tab-bar a {
     padding: 8px 14px;
     color: #333;
-    border-bottom: 3px solid transparent;
-    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: none;
+    transition: color 0.2s;
 }
 
 .tab-bar a:hover {
-    color: #1976d2;
+    border-bottom: 3px solid #1976d2;
+    color: #4a90e2;
 }
 
 .tab-bar a.active {
     border-bottom-color: #1976d2;
     color: #1976d2;
+    border-bottom: none;
 }
 
 .tab-bar form {
@@ -71,7 +73,7 @@ Tab Bar (TCG Style)
     padding: 8px 14px;
     color: #333;
     border-bottom: 3px solid transparent;
-    transition: color 0.2s, border-bottom 0.2s;
+    transition: color 0.2s;
 }
 
 .search-button {
