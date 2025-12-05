@@ -62,12 +62,14 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 
 ### Frontend / UI
 
-* [ ] Make fully **mobile-responsive** with media queries
-* [ ] Implement **dynamic search and filtering**
-* [ ] Add **card detail pages**
-* [ ] Optimize **card grid layout**
-* [ ] Add **animations/hover effects**
-* [ ] Improve **footer and navigation**
+* [x] Make fully **mobile-responsive** with media queries
+* [x] Implement **dynamic search and filtering**
+* [x] Add **card detail pages**
+* [x] Optimize **card grid layout**
+* [x] Improve **footer and navigation**
+* [x] Add and delete cards by admin `admin.html`
+* [ ] Cart page `cart.html`
+
 
 ### Backend / Server
 
@@ -86,7 +88,6 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 
 ### Optional Enhancements
 
-* [ ] Add **PWA functionality** (installable app, offline caching)
 * [ ] Optimize **performance** for large datasets
 * [ ] Add **reviews, ratings, wishlist**
 

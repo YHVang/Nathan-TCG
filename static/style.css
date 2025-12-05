@@ -27,6 +27,9 @@ Header
 .site-header h1 {
     font-size: 24px;
     margin: 0;
+    color: white;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ===============================
@@ -335,6 +338,152 @@ footer {
     padding: 20px;
     margin-top: 50px;
     color: #777;
+}
+
+/* ===============================
+404 Error Page
+================================*/
+.error-container {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+}
+
+.error-container h1 {
+    font-size: 100px;
+    margin: 0;
+    color: #2b2d42;
+}
+
+.error-container h2 {
+    font-size: 28px;
+    margin: 20px 0;
+    color: #4a90e2;
+}
+
+.error-container a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.25s;
+}
+
+.error-container a:hover {
+    background-color: #0056b3;
+}
+
+/* ===============================
+Admin Page
+================================*/
+
+.add-card-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-card-container h2 {
+    margin-bottom: 15px;
+    color: #2b2d42;
+}
+
+#add-card-form .form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+#add-card-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+#add-card-form button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#add-card-form button:hover {
+    background-color: #0056b3;
+}
+
+/* ===============================
+Inventory
+================================*/
+
+.inventory-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2b2d42;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #2b2d42;
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+tr:hover {
+    background-color: #e1e1e1;
+}
+
+.actions button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
 }
 
 /* Mobile-specific overrides */

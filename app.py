@@ -1,6 +1,9 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
+from flask import request, jsonify
+from flask import request
+
 cards = [
     {
         "name": "Mega Sableye & Tyranitar GX (Secret)",
@@ -72,15 +75,32 @@ cards = [
 def home():
     return render_template("index.html", cards_json=cards)
 
-@app.route("/admin")
-def admin():
-    return render_template("admin.html")
-
 @app.route("/home")
 def main():
     return render_template("home.html", cards_json=cards)
 
-from flask import request
+@app.route("/admin")
+def admin():
+    return render_template("admin.html", cards_json=cards)
+
+
+@app.route("/admin/add_card", methods=["POST"])
+def add_card():
+    card = request.get_json()
+    if card:
+        cards.append(card)  # <-- actually adds to the server-side array
+        return jsonify({"success": True})
+    return jsonify({"success": False}), 400
+
+
+@app.route("/cart")
+def cart():
+    return render_template("cart.html")
+
+@app.route("/404")
+def error():
+    return render_template("404.html")
+
 
 @app.route("/item")
 def item():

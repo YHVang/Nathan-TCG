@@ -4,13 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan's TCG</title>
+    <title>404 - Page Not Found | Nathan's TCG</title>
     <!-- Link CSS from static folder -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <style>
+        /* Center 404 content */
+        .error-container {
+            max-width: 600px;
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        .error-container h1 {
+            font-size: 100px;
+            margin: 0;
+            color: #2b2d42;
+        }
+
+        .error-container h2 {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #4a90e2;
+        }
+
+        .error-container a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.25s;
+        }
+
+        .error-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,11 +59,11 @@
     <!-- Tab Bar -->
     <nav class="tab-bar">
         <div class="tab-links">
-            <a href="/home"><i class="fa fa-home w3-xlarge"></i>
-            </a>
-            <a class="active" href="#" data-tab="all">All</a>
+            <a href="/home"><i class="fa fa-home w3-xlarge"></i></a>
+            <a href="/">All</a>
             <a href="#" data-tab="singles">Singles</a>
             <a href="#" data-tab="sealed">Sealed Products</a>
+            <a href="/admin">Admin</a>
         </div>
         <div class="right-side-tab">
             <form action="/search" method="get">
@@ -47,24 +83,20 @@
         </div>
     </nav>
 
-    <!-- Search Results Section -->
-    <section class="results-section">
-        <h2 class="results-title">Search Results</h2>
-        <div id="card-container" class="card-grid">
-            <!-- Cards will be dynamically rendered by script.js -->
-        </div>
-    </section>
+    <!-- 404 Error Content -->
+    <div class="error-container">
+        <h1>404</h1>
+        <h2>Oops! Page Not Found</h2>
+        <p>The page you are looking for does not exist or has been moved.</p>
+        <a href="/home">Return to Home</a>
+    </div>
 
     <!-- Footer -->
     <footer>
+        &copy; 2025 Nathan's TCG
     </footer>
 
-    <script>
-        const cards = {{ cards_json | tojson }};
-    </script>
-    <!-- Link JS from static folder -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 
 </body>
 
