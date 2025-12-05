@@ -35,7 +35,8 @@ Tab Bar (TCG Style)
 .tab-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* left tabs, right-side container */
+    justify-content: space-between;
+    /* left tabs, right-side container */
     background-color: #ffffff;
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
@@ -49,7 +50,8 @@ Tab Bar (TCG Style)
 .tab-links {
     display: flex;
     gap: 18px;
-    white-space: nowrap; /* prevents links from breaking weirdly */
+    white-space: nowrap;
+    /* prevents links from breaking weirdly */
 }
 
 
@@ -79,17 +81,19 @@ Tab Bar (TCG Style)
 
     flex: 0 1 auto;
     margin: 0;
-    padding: 0; /* prevent unnecessary spacing */
+    padding: 0;
+    /* prevent unnecessary spacing */
 }
 
 /* Right side container for search + menu */
-.right-side.tab {
+.right-side-tab {
     display: flex;
     align-items: center;
-    gap: 12px; /* spacing between search and menu */
+    gap: 12px;
+    /* spacing between search and menu */
 }
 
-.right-side.tab form {
+.right-side-tab form {
     flex: 0 0 auto;
     margin: 0;
     padding: 0;
@@ -101,13 +105,14 @@ Tab Bar (TCG Style)
     padding: 12px;
     background-color: #f6f6f6;
     border-radius: 28px;
-    flex: 0 0 200px;  /* fixed width to avoid pushing menu */
+    flex: 0 0 200px;
+    /* fixed width to avoid pushing menu */
     max-width: 220px;
     transition: background 0.25s;
 }
 
-.search:focus-within{
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+.search:focus-within {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 #search-input {
@@ -122,8 +127,8 @@ Tab Bar (TCG Style)
 
 #search-input::placeholder,
 .search-icon {
-    color: rgba(0,0,0,0.5);
-} 
+    color: rgba(0, 0, 0, 0.5);
+}
 
 .search-button {
     margin-left: 14px;
@@ -335,7 +340,8 @@ footer {
 /* Mobile-specific overrides */
 @media (max-width: 700px) {
     .tab-bar {
-        flex-wrap: wrap;     /* allow wrapping only on small screens */
+        flex-wrap: wrap;
+        /* allow wrapping only on small screens */
         justify-content: center;
     }
 
@@ -346,7 +352,8 @@ footer {
 
     .search {
         width: 100%;
-        max-width: none; /* full width search bar */
+        max-width: none;
+        /* full width search bar */
     }
 
     .menu-bar {
