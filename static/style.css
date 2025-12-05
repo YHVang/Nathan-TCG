@@ -34,27 +34,30 @@ Tab Bar (TCG Style)
 ================================*/
 .tab-bar {
     display: flex;
+    align-items: center;
+    justify-content: space-between; /* left tabs, right-side container */
     background-color: #ffffff;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border-bottom: 1px solid #ddd;
-    gap: 20px;
     font-size: 15px;
     font-weight: 600;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 /* Wrap links in a container */
 .tab-links {
     display: flex;
-    gap: 20px;
-    flex-grow: 1;
-    /* Take remaining space */
+    gap: 18px;
+    white-space: nowrap; /* prevents links from breaking weirdly */
 }
+
 
 .tab-bar a {
     padding: 8px 14px;
     color: #333;
     border-bottom: none;
-    transition: color 0.2s;
+    transition: border-color 0.2s, color 0.2s;
 }
 
 .tab-bar a:hover {
@@ -65,7 +68,6 @@ Tab Bar (TCG Style)
 .tab-bar a.active {
     border-bottom-color: #1976d2;
     color: #1976d2;
-    border-bottom: none;
 }
 
 .tab-bar form {
@@ -74,9 +76,57 @@ Tab Bar (TCG Style)
     color: #333;
     border-bottom: 3px solid transparent;
     transition: color 0.2s;
+
+    flex: 0 1 auto;
+    margin: 0;
+    padding: 0; /* prevent unnecessary spacing */
 }
 
+/* Right side container for search + menu */
+.right-side.tab {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* spacing between search and menu */
+}
+
+.right-side.tab form {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f6f6f6;
+    border-radius: 28px;
+    flex: 0 0 200px;  /* fixed width to avoid pushing menu */
+    max-width: 220px;
+    transition: background 0.25s;
+}
+
+.search:focus-within{
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+#search-input {
+    font-size: 16px;
+    color: #333;
+    margin-left: 12px;
+    outline: none;
+    border: none;
+    background: transparent;
+    flex: 1;
+}
+
+#search-input::placeholder,
+.search-icon {
+    color: rgba(0,0,0,0.5);
+} 
+
 .search-button {
+    margin-left: 14px;
     background-color: #007bff;
     /* Example: Blue background */
     color: white;
@@ -87,6 +137,7 @@ Menu bar
 ================================*/
 
 .menu-bar {
+    flex: 0 0 auto;
     display: inline-block;
     cursor: pointer;
 }
@@ -282,6 +333,30 @@ footer {
 }
 
 /* Mobile-specific overrides */
+@media (max-width: 700px) {
+    .tab-bar {
+        flex-wrap: wrap;     /* allow wrapping only on small screens */
+        justify-content: center;
+    }
+
+    .tab-links {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search {
+        width: 100%;
+        max-width: none; /* full width search bar */
+    }
+
+    .menu-bar {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+    }
+}
+
+
 @media (max-width: 480px) {
     .card-grid {
         grid-template-columns: 1fr;
