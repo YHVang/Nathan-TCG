@@ -52,12 +52,17 @@
             <div class="form-row">
                 <input type="text" id="card-name" placeholder="Card Name" required>
                 <input type="text" id="card-set" placeholder="Set Name" required>
-                <input type="text" id="card-rarity" placeholder="Rarity">
+                <input type="text" id="card-number" placeholder="Card Number">
                 <input type="number" id="card-quantity" placeholder="Quantity" min="0">
                 <input type="number" id="card-price" placeholder="Price" step="0.01" min="0" required>
             </div>
             <div class="form-row">
-                <input type="text" id="card-category" placeholder="Category (singles/sealed)" required>
+                <select id="card-category" required>
+                    <option value="singles">Singles</option>
+                    <option value="sealed">Sealed</option>
+                    <option value="other">Other</option>
+                </select>
+
                 <input type="text" id="card-img" placeholder="Image URL">
                 <input type="number" id="card-market-price" placeholder="Market Price" step="0.01" min="0">
             </div>
@@ -65,25 +70,47 @@
         </form>
     </div>
 
+    <!-- Live Preview -->
+    <div class="preview-container">
+        <div class="card-preview card">
+            <img id="preview-img" class="card-img" src="/static/images/preview-image.jpg" alt="Card preview">
+
+            <div class="card-info">
+                <div class="card-details">
+                    <h3 id="preview-name" class="card-name">Card Name</h3>
+                    <p id="preview-set" class="card-set">Set</p>
+                    <p id="preview-number" class="card-number">Number</p>
+                </div>
+
+                <div class="card-prices">
+                    <p class="price"><strong>Price:</strong> <span id="preview-price">$0.00</span></p>
+                    <p class="market-price"><strong>Market:</strong> <span id="preview-market">$0.00</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Inventory Table -->
     <div class="inventory-container">
         <h1>Inventory</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Card Name</th>
-                    <th>Set</th>
-                    <th>Rarity</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="inventory-body">
-                <!-- JS will dynamically populate rows -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Card Name</th>
+                        <th>Set</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-body">
+                    <!-- JS will dynamically populate rows -->
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     <!-- Footer -->

@@ -68,6 +68,8 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 * [x] Optimize **card grid layout**
 * [x] Improve **footer and navigation**
 * [x] Add and delete cards by admin `admin.html`
+* [ ] Fix search bar (words run off)
+* [ ] index route card display when undefined leads to broken page. 
 * [ ] Cart page `cart.html`
 
 

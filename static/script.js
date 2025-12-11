@@ -28,11 +28,12 @@ function renderItems(items, containerId, isTable = false) {
         items.forEach(card => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${card.name}</td>
-                <td>${card.set}</td>
-                <td>${card.rarity || 'N/A'}</td>
-                <td>${card.quantity || 0}</td>
-                <td>${card.price}</td>
+                <td data-label="Image">
+                    ${card.img ? `<img src="${card.img}" alt="${card.name}" class="thumb-img">` : 'N/A'}
+                </td>
+                <td data-label="Set">${card.set}</td>
+                <td data-label ="Quantity">${card.quantity || 0}</td>
+                <td data-label ="Price">${card.price}</td>
                 <td class="actions">
                     <button class="edit-btn">Edit</button>
                     <button class="delete-btn">Delete</button>
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Initial render
+    // Initial render in Admin page
     if (document.getElementById("card-container") || document.getElementById("inventory-body")) {
         filterItems(activeCategory, searchInput?.value || "");
     }
@@ -130,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const newCard = {
                 name: document.getElementById("card-name").value,
                 set: document.getElementById("card-set").value,
-                rarity: document.getElementById("card-rarity").value || "N/A",
                 quantity: parseInt(document.getElementById("card-quantity").value) || 0,
                 price: parseFloat(document.getElementById("card-price").value) || 0,
                 category: document.getElementById("card-category").value || "all",
@@ -164,3 +164,58 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// --------------------------
+// Live Card preview --- Admin
+// --------------------------
+
+// Preview DOM elements
+document.addEventListener("DOMContentLoaded", () => {
+    // Preview DOM elements
+    const previewImg = document.getElementById("preview-img");
+    const previewName = document.getElementById("preview-name");
+    const previewSet = document.getElementById("preview-set");
+    const previewNumber = document.getElementById("preview-number");
+    const previewPrice = document.getElementById("preview-price");
+    const previewMarket = document.getElementById("preview-market");
+
+    // Form inputs
+    const inputs = {
+        name: document.getElementById("card-name"),
+        set: document.getElementById("card-set"),
+        number: document.getElementById("card-number"),
+        quantity: document.getElementById("card-quantity"),
+        price: document.getElementById("card-price"),
+        market: document.getElementById("card-market-price"),
+        img: document.getElementById("card-img"),
+    };
+
+    function updateLivePreview() {
+        previewName.textContent = inputs.name.value || "Card Name";
+        previewSet.textContent = inputs.set.value || "Set";
+        previewNumber.textContent = inputs.number.value || "—";
+
+        previewPrice.textContent = inputs.price.value ? `$${parseFloat(inputs.price.value).toFixed(2)}` : "$0.00";
+        previewMarket.textContent = inputs.market.value ? `$${parseFloat(inputs.market.value).toFixed(2)}` : "$0.00";
+
+        previewImg.src = inputs.img.value.trim() || "/static/images/preview-image.jpg";
+        previewImg.onerror = () => {
+            previewImg.src = "/static/images/preview-image.jpg";
+        };
+
+        previewImg.alt = inputs.name.value || "Card preview";
+    }
+
+    // Attach input listener to all fields
+    Object.values(inputs).forEach(input => {
+        if (input) input.addEventListener("input", updateLivePreview);
+    });
+
+    // Optional: initialize preview on page load
+    updateLivePreview();
+});
+
+
+
+
+

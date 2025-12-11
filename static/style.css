@@ -76,8 +76,6 @@ Tab Bar (TCG Style)
 }
 
 .tab-bar form {
-    margin-right: 0;
-    padding: 8px 14px;
     color: #333;
     border-bottom: 3px solid transparent;
     transition: color 0.2s;
@@ -424,51 +422,141 @@ Admin Page
 }
 
 /* ===============================
-Inventory
+Admin Card Preview
 ================================*/
 
+.preview-container {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.card-preview {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    /* same as homepage cards */
+    cursor: default;
+}
+
+.card-preview img {
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    background-color: #eee;
+    padding: 10px 0;
+    display: block;
+    margin: 0 auto;
+}
+
+.card-preview .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    padding: 14px;
+    overflow-y: auto;
+}
+
+.card-preview .card-details,
+.card-preview .card-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-preview h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.card-preview .card-set,
+.card-preview .card-number {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.card-preview .price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b2d42;
+}
+
+.card-preview .market-price {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ===============================
+Inventory
+================================*/
 .inventory-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-h1 {
+.inventory-container h1 {
     text-align: center;
     margin-bottom: 30px;
     color: #2b2d42;
 }
 
-table {
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.inventory-container table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
+    min-width: 600px;
 }
 
-th,
-td {
+.inventory-container th,
+.inventory-container td {
     padding: 12px 15px;
     text-align: left;
+    vertical-align: middle;
 }
 
-th {
+.inventory-container th {
+    position: sticky;
+    top: 0;
     background-color: #2b2d42;
     color: white;
     font-weight: 600;
+    z-index: 10;
 }
 
-tr:nth-child(even) {
-    background-color: #f4f4f4;
+.inventory-container tr:nth-child(even) {
+    background-color: #f0f4f8;
+    /* soft bluish-gray */
 }
 
-tr:hover {
-    background-color: #e1e1e1;
+.inventory-container tr:nth-child(odd) {
+    background-color: #ffffff;
+    /* keep white for contrast */
 }
 
-.actions button {
+.inventory-container tr:hover {
+    background-color: #d0e1ff;
+    /* light blue hover for visibility */
+}
+
+.inventory-container .actions button {
     padding: 6px 10px;
     border: none;
     border-radius: 4px;
@@ -476,15 +564,80 @@ tr:hover {
     font-size: 14px;
 }
 
-.edit-btn {
+.inventory-container .edit-btn {
     background-color: #007bff;
     color: white;
 }
 
-.delete-btn {
+.inventory-container .delete-btn {
     background-color: #e74c3c;
     color: white;
 }
+
+/* Thumbnail styling for admin table */
+.inventory-container .admin-card-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inventory-container .thumb-img {
+    height: 50px;
+    width: auto;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+/* Mobile-specific overrides */
+@media (max-width: 700px) {
+    .inventory-container table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .inventory-container thead,
+    .inventory-container tbody,
+    .inventory-container tr,
+    .inventory-container th,
+    .inventory-container td {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .inventory-container thead {
+        display: none;
+    }
+
+    .inventory-container tr {
+        margin-bottom: 1em;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+    .inventory-container td {
+        padding-left: 50%;
+        text-align: left;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    .inventory-container td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .inventory-container td:last-child {
+        border-bottom: 0;
+    }
+}
+
 
 /* Mobile-specific overrides */
 @media (max-width: 700px) {
@@ -510,6 +663,25 @@ tr:hover {
         right: 20px;
         top: 10px;
     }
+
+    /* make admin table scrollable on small screens */
+    .inventory-container table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* smooth scrolling on mobile */
+    }
+
+    .inventory-container thead,
+    .inventory-container tbody,
+    .inventory-container tr,
+    .inventory-container th,
+    .inventory-container td {
+        display: block;
+        /* stacked card style below 480px */
+    }
+
 }
 
 
@@ -542,5 +714,38 @@ tr:hover {
         max-width: 100%;
         height: auto;
         /* images scale down */
+    }
+
+    /* stacked "card" style for very small screens */
+    .inventory-container thead {
+        display: none;
+        /* hide headers */
+    }
+
+    .inventory-container tr {
+        margin-bottom: 1em;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+    }
+
+    .inventory-container td {
+        padding-left: 50%;
+        text-align: left;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    .inventory-container td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .inventory-container td:last-child {
+        border-bottom: 0;
     }
 }
