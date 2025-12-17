@@ -123,8 +123,8 @@ if __name__ == "__main__":
         cur.execute("SELECT * FROM cards;")
         cards_in_db = cur.fetchall()
         print(f"Cards currently in DB ({len(cards_in_db)}):")
-        for card in cards_in_db:
-            print(card)
+        # for card in cards_in_db:
+        #     print(card)
 
         cur.close()
         conn.close()

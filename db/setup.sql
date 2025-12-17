@@ -1,19 +1,34 @@
 -- =====================================
--- 1. Create the database
+-- 1. Create the database (if not exists)
 -- =====================================
-CREATE DATABASE tcg_website_db;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_database WHERE datname = 'tcg_website_db'
+    ) THEN
+        CREATE DATABASE tcg_website_db;
+    END IF;
+END $$;
 
 -- =====================================
--- 2. Create the app user
+-- 2. Create the app user (if not exists)
 -- =====================================
--- Replace 'tcg_website_pass' with a secure password
-CREATE USER tcg_website_user WITH PASSWORD 'password';
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_roles WHERE rolname = 'tcg_website_user'
+    ) THEN
+        CREATE USER tcg_website_user WITH PASSWORD 'password';
+    END IF;
+END $$;
 
 -- =====================================
--- 3. Give the user privileges on the database
+-- 3. Give the user privileges
 -- =====================================
 GRANT CONNECT ON DATABASE tcg_website_db TO tcg_website_user;
-\c tcg_website_db  -- switch to the new database
+-- switch to the new database
+\c tcg_website_db
+
 
 -- =====================================
 -- 4. Create the 'cards' table if it doesn't exist
