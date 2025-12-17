@@ -1,86 +1,27 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import config
+
 app = Flask(__name__)
 
-from flask import request, jsonify
-from flask import request
-
-cards = [
-    {
-        "name": "Mega Sableye & Tyranitar GX (Secret)",
-        "set": "Unified Minds",
-        "number": "245 / 236",
-        "price": "$53.00",
-        "marketPrice": "$59.39",
-        "img": "/static/images/mega-sableye-tyranitar.jpg",
-        "category": "singles"
-    },
-    {
-        "name": "Latias & Latios GX (Alternate Full Art)",
-        "set": "Darkness Ablaze",
-        "number": "170 / 181",
-        "price": "$973.07",
-        "marketPrice": "$769.81",
-        "img": "/static/images/latias-latios.jpg",
-        "category": "singles"
-    },
-    {
-        "name": "Pokemon Base Set (Shadowless)",
-        "set": "Shadowless",
-        "number": "",
-        "price": "$5000.00",
-        "marketPrice": "$2,830.00",
-        "img": "/static/images/pokemon-base-set-shadowless.jpg",
-        "category": "sealed"
-    },
-    {
-        "name": "Moneky.D.Luffy (119) (Alternate Art)",
-        "set": "Awakening of the New Era",
-        "number": "OP05-119",
-        "price": "$5,595.79",
-        "marketPrice": "$3,122.69",
-        "img": "/static/images/monkey-d-luffy.jpg",
-        "category": "singles"
-    },
-    {
-        "name": "Sanji (Treasure Cup 2025)",
-        "set": "One Piece Promotion Cards",
-        "number": "OP10-005",
-        "price": "$2,499.99",
-        "marketPrice": "$2,330.00",
-        "img": "/static/images/sanji-treasure-cup-2025.jpg",
-        "category": "singles"
-    },
-    {
-        "name": "Vampire Princess of Night Fog, Nightrose (RLR)",
-        "set": "Butterfly d'Moonlight",
-        "number": "V-BT09/RLR002EN - RLR",
-        "price": "$2,000.00",
-        "marketPrice": "$2,000.00",
-        "img": "/static/images/vampire-princess-of-night-fog.jpg",
-        "category": "singles"
-    },
-    {
-        "name": "History Collection Booster Box Case - D-PV01",
-        "set": "D-PV01: History Collection",
-        "number": "",
-        "price": "$2,014.94",
-        "marketPrice": "$1,257.49",
-        "img": "/static/images/history-collection-booster-box-case.jpg",
-        "category": "sealed"
-    }
-]
+# cards = load_cards_from_db()
 
 
 @app.route("/")
 def home():
+    cards = load_cards_from_db()
     return render_template("index.html", cards_json=cards)
 
 @app.route("/home")
 def main():
+    cards = load_cards_from_db()
     return render_template("home.html", cards_json=cards)
 
 @app.route("/admin")
 def admin():
+    cards = load_cards_from_db()
     return render_template("admin.html", cards_json=cards)
 
 
@@ -101,23 +42,92 @@ def cart():
 def error():
     return render_template("404.html")
 
+def get_connection():
+    return psycopg2.connect(
+        host=config.DB_HOST,
+        database=config.DB_NAME,
+        user=config.DB_USER,
+        password=config.DB_PASS,
+        port=config.DB_PORT
+    )
+
+def load_cards_from_db():
+    try:
+        conn = get_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM cards;")
+        cards_in_db = cur.fetchall()
+        cur.close()
+        conn.close()
+        return cards_in_db
+    except Exception as e:
+        print("DB read failed:", e)
+        return []  # fallback to empty list if DB read fails
+
+
+# @app.route("/item")
+# def item():
+#     set_name = request.args.get("set")
+#     card_number = request.args.get("number")
+
+#     # Find the card
+#     card = next(
+#         (c for c in cards
+#          if c["set"].strip() == set_name.strip() and c["number"].strip() == card_number.strip()),
+#         None
+#     )
+
+#     if card:
+#         return render_template("item.html", card=card)
+#     return "Item not found", 404
 
 @app.route("/item")
 def item():
     set_name = request.args.get("set")
     card_number = request.args.get("number")
 
-    # Find the card
-    card = next(
-        (c for c in cards
-         if c["set"].strip() == set_name.strip() and c["number"].strip() == card_number.strip()),
-        None
-    )
+    try:
+        conn = get_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
 
-    if card:
-        return render_template("item.html", card=card)
-    return "Item not found", 404
+        # Query the DB for the specific card
+        cur.execute("""
+            SELECT * FROM cards
+            WHERE set_name = %s AND number = %s
+            LIMIT 1;
+        """, (set_name, card_number))
+
+        card = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if card:
+            return render_template("item.html", card=card)
+        else:
+            return "Item not found", 404
+
+    except Exception as e:
+        print("DB query failed:", e)
+        return "Internal server error", 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # test_db_rw()
+
+    # Test DB connection and read existing cards
+    try:
+        conn = get_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+
+        # Simple read: get all cards
+        cur.execute("SELECT * FROM cards;")
+        cards_in_db = cur.fetchall()
+        print(f"Cards currently in DB ({len(cards_in_db)}):")
+        # for card in cards_in_db:
+        #     print(card)
+
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print("DB read failed:", e)
+    app.run(host="0.0.0.0", port=8080, debug=True)
