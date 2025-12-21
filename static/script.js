@@ -31,7 +31,7 @@ function renderItems(items, containerId, isTable = false) {
                 <td data-label="Image">
                     ${card.img ? `<img src="${card.img}" alt="${card.name}" class="thumb-img">` : 'N/A'}
                 </td>
-                <td data-label="Set">${card.set}</td>
+                <td data-label="Set">${card.set_name}</td>
                 <td data-label ="Quantity">${card.quantity || 0}</td>
                 <td data-label ="Price">${card.price}</td>
                 <td class="actions">
@@ -51,12 +51,12 @@ function renderItems(items, containerId, isTable = false) {
                         <div class="card-info">
                             <div class="card-details">
                                 <h3 class="card-name">${card.name}</h3>
-                                <p class="card-set">${card.set}</p>
+                                <p class="card-set">${card.set_name}</p>
                                 <p class="card-number">${card.number}</p>
                             </div>
                             <div class="card-prices">
                                 <p class="price"><strong>Price:</strong> ${card.price}</p>
-                                <p class="market-price"><strong>Market:</strong> ${card.marketPrice}</p>
+                                <p class="market-price"><strong>Market:</strong> ${card.market_price}</p>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ function filterItems(category = "all", query = "") {
 
     const filtered = cards.filter(card => {
         const matchesCategory = category === "all" || card.category === category;
-        const matchesSearch = card.name.toLowerCase().includes(query) || card.set.toLowerCase().includes(query);
+        const matchesSearch = card.name.toLowerCase().includes(query) || card.set_name.toLowerCase().includes(query);
         return matchesCategory && matchesSearch;
     });
 
