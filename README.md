@@ -67,8 +67,7 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 * [x] Add **card detail pages**
 * [x] Optimize **card grid layout**
 * [x] Improve **footer and navigation**
-* [x] Add and delete cards by admin `admin.html`
-* [ ] ** Fix ** index route card display Internal Server Error when undefined leads to broken page (NOT 404 page).
+* [ ] Add and delete cards by admin `admin.html` via METHOD to DB
 * [ ] Add upload image functionality. 
 * [ ] Cart page `cart.html`
 
