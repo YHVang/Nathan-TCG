@@ -33,6 +33,25 @@ def add_card():
         return jsonify({"success": True})
     return jsonify({"success": False}), 400
 
+@app.route("/item") 
+def item(): 
+    set_name = request.args.get("set") 
+    card_number = request.args.get("number") 
+    try:
+         conn = get_connection() 
+         cur = conn.cursor(cursor_factory=RealDictCursor) 
+         # Query the DB for the specific card 
+         cur.execute(""" SELECT * FROM cards WHERE set_name = %s AND number = %s LIMIT 1; """, (set_name, card_number)) 
+         card = cur.fetchone() 
+         cur.close() 
+         conn.close() 
+         if card: return render_template("item.html", card_json=card) 
+         else: 
+            return "Item not found", 404 
+    except Exception as e: 
+         print("DB query failed:", e) 
+         return "Internal server error", 500
+
 
 @app.route("/cart")
 def cart():
@@ -63,52 +82,6 @@ def load_cards_from_db():
     except Exception as e:
         print("DB read failed:", e)
         return []  # fallback to empty list if DB read fails
-
-
-# @app.route("/item")
-# def item():
-#     set_name = request.args.get("set")
-#     card_number = request.args.get("number")
-
-#     # Find the card
-#     card = next(
-#         (c for c in cards
-#          if c["set"].strip() == set_name.strip() and c["number"].strip() == card_number.strip()),
-#         None
-#     )
-
-#     if card:
-#         return render_template("item.html", card=card)
-#     return "Item not found", 404
-
-@app.route("/item")
-def item():
-    set_name = request.args.get("set")
-    card_number = request.args.get("number")
-
-    try:
-        conn = get_connection()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-
-        # Query the DB for the specific card
-        cur.execute("""
-            SELECT * FROM cards
-            WHERE set_name = %s AND number = %s
-            LIMIT 1;
-        """, (set_name, card_number))
-
-        card = cur.fetchone()
-        cur.close()
-        conn.close()
-
-        if card:
-            return render_template("item.html", card=card)
-        else:
-            return "Item not found", 404
-
-    except Exception as e:
-        print("DB query failed:", e)
-        return "Internal server error", 500
 
 
 if __name__ == "__main__":
