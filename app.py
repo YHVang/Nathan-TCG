@@ -28,10 +28,79 @@ def admin():
 @app.route("/admin/add_card", methods=["POST"])
 def add_card():
     card = request.get_json()
-    if card:
-        cards.append(card)  # <-- actually adds to the server-side array
-        return jsonify({"success": True})
-    return jsonify({"success": False}), 400
+    if not card:
+        return jsonify({"success": False, "error": "No card data provided"}), 400
+
+    # Normalize empty number to None (stored as NULL in DB)
+    number = card.get("number") or None
+
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO cards (name, set_name, number, price, market_price, img, category)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            RETURNING id;
+        """, (
+            card.get("name"),
+            card.get("set_name"),
+            number,
+            card.get("price"),
+            card.get("market_price"),
+            card.get("img"),
+            card.get("category", "all")
+        ))
+
+        new_id = cur.fetchone()[0]  # Get DB id of inserted card
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        # Return the DB id so client can track it
+        card["id"] = new_id
+        card["number"] = number  # ensure client array matches DB
+        return jsonify({"success": True, "card": card})
+
+    except Exception as e:
+        print("DB insert failed:", e)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@app.route("/admin/delete_card", methods=["POST"])
+def delete_card():
+    data = request.get_json()
+    set_name = data.get("set")
+    number = data.get("number", "")
+
+    if not set_name:
+        return jsonify({"success": False, "error": "No set_name provided"}), 400
+
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            DELETE FROM cards 
+            WHERE set_name = %s AND (number = %s OR (%s = '' AND number IS NULL))
+            RETURNING id;
+            """,
+            (set_name, number, number)
+        )
+
+        deleted = cur.fetchone()
+        if not deleted:
+            return jsonify({"success": False, "error": "Card not found"}), 404
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"success": True, "id": deleted[0]})
+    except Exception as e:
+        print("Failed to delete card:", e)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+
 
 @app.route("/item") 
 def item(): 
