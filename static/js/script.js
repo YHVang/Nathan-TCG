@@ -131,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const newCard = {
                 name: document.getElementById("card-name").value,
                 set: document.getElementById("card-set").value,
+                number: document.getElementById("card-number").value || "",
                 quantity: parseInt(document.getElementById("card-quantity").value) || 0,
                 price: parseFloat(document.getElementById("card-price").value) || 0,
                 category: document.getElementById("card-category").value || "all",
