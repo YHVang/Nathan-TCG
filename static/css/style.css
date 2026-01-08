@@ -1,0 +1,384 @@
+/* ===============================
+Global Styles
+================================*/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===============================
+Header
+================================*/
+.site-header {
+    background-color: #2b2d42;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    align-items: center;
+}
+
+.site-header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ===============================
+Tab Bar & Search
+================================*/
+.tab-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    font-weight: 600;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.tab-links {
+    display: flex;
+    gap: 18px;
+    white-space: nowrap;
+}
+
+.tab-bar a {
+    padding: 8px 14px;
+    color: #333;
+    border-bottom: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.tab-bar a:hover {
+    border-bottom: 3px solid #1976d2;
+    color: #4a90e2;
+}
+
+.tab-bar a.active {
+    border-bottom-color: #1976d2;
+    color: #1976d2;
+}
+
+.right-side-tab {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f6f6f6;
+    border-radius: 28px;
+    flex: 0 1 auto;
+    min-width: 260px;
+    transition: background 0.25s;
+}
+
+.search:focus-within {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+#search-input {
+    font-size: 16px;
+    color: #333;
+    margin-left: 12px;
+    outline: none;
+    border: none;
+    background: transparent;
+    flex: 1;
+}
+
+#search-input::placeholder,
+.search-icon {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.search-button {
+    margin-left: 8px;
+    padding: 6px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* ===============================
+Cart
+================================*/
+.cart {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+}
+
+/* ===============================
+Menu Bar Animation
+================================*/
+.change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+}
+
+.change .bar2 {
+    opacity: 0;
+}
+
+.change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+}
+
+/* ===============================
+Results Section
+================================*/
+.results-section {
+    max-width: 1250px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.results-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    padding-bottom: 3%;
+}
+
+/* ===============================
+Card Grid
+================================*/
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.card-grid img {
+    width: auto;
+    height: auto;
+    max-width: 144px;
+    max-height: 210px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.22);
+}
+
+.card-img {
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    background-color: #eee;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    padding: 14px;
+    overflow-y: auto;
+}
+
+.card-info::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card-info::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card-info::-webkit-scrollbar-thumb {
+    background-color: #2b2d42;
+    border-radius: 50px;
+}
+
+.card-info::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+.card-details,
+.card-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-info p,
+.card-info h3 {
+    margin: 0;
+}
+
+.card-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.card-set,
+.card-number {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b2d42;
+}
+
+.market-price {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ===============================
+Footer
+================================*/
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    color: #777;
+}
+
+/* ===============================
+404 Error Page
+================================*/
+.error-container {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+}
+
+.error-container h1 {
+    font-size: 100px;
+    margin: 0;
+    color: #2b2d42;
+}
+
+.error-container h2 {
+    font-size: 28px;
+    margin: 20px 0;
+    color: #4a90e2;
+}
+
+.error-container a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.25s;
+}
+
+.error-container a:hover {
+    background-color: #0056b3;
+}
+
+/* ===============================
+Responsive Styles
+================================*/
+@media (max-width: 700px) {
+    .tab-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tab-links {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search {
+        width: 100%;
+        max-width: none;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        height: auto;
+    }
+
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 15px;
+    }
+
+    .tab-bar {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .card-img {
+        max-width: 100%;
+        height: auto;
+    }
+}

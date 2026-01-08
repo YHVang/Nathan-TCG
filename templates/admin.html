@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nathan's TCG Admin</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
@@ -106,8 +107,8 @@
                 <thead>
                     <tr>
                         <th>Card Name</th>
-                        <th>Set</th>
-                        <th>Quantity</th>
+                        <th>Set Name</th>
+                        <th>Card Number</th>
                         <th>Price</th>
                         <th>Actions</th>
                     </tr>
@@ -130,8 +131,7 @@
     </script>
 
     <!-- JS -->
-    <script src="{{ url_for('static', filename='admin.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 </body>
 
 </html>
