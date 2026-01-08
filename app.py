@@ -70,7 +70,7 @@ def add_card():
 def delete_card():
     data = request.get_json()
     set_name = data.get("set")
-    number = data.get("number", "")
+    number = data.get("number")  # this can be empty string or None
 
     if not set_name:
         return jsonify({"success": False, "error": "No set_name provided"}), 400
@@ -78,14 +78,19 @@ def delete_card():
     try:
         conn = get_connection()
         cur = conn.cursor()
-        cur.execute(
-            """
-            DELETE FROM cards 
-            WHERE set_name = %s AND (number = %s OR (%s = '' AND number IS NULL))
-            RETURNING id;
-            """,
-            (set_name, number, number)
-        )
+
+        if not number:  # treat empty string or None as NULL
+            cur.execute("""
+                DELETE FROM cards
+                WHERE set_name = %s AND number IS NULL
+                RETURNING id;
+            """, (set_name,))
+        else:
+            cur.execute("""
+                DELETE FROM cards
+                WHERE set_name = %s AND number = %s
+                RETURNING id;
+            """, (set_name, number))
 
         deleted = cur.fetchone()
         if not deleted:
@@ -98,6 +103,7 @@ def delete_card():
     except Exception as e:
         print("Failed to delete card:", e)
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 
 

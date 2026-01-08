@@ -7,7 +7,9 @@ function menuFunction(x) {
     x.classList.toggle("change");
 }
 
+// --------------------------
 // Generic render function
+// --------------------------
 function renderItems(items, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -15,33 +17,41 @@ function renderItems(items, containerId) {
     container.innerHTML = "";
 
     if (!items.length) {
-        container.innerHTML = `<tr id="no-results-row"><td colspan="6" style="text-align:center;">No items found.</td></tr>`;
+        container.innerHTML = `<tr id="no-results-row"><td colspan="5" style="text-align:center;">No items found.</td></tr>`;
         return;
     }
 
     items.forEach(card => {
+        const price = card.price != null ? parseFloat(String(card.price).replace(/,/g, "")) : 0;
+        const displayPrice = isNaN(price) ? "0.00" : price.toFixed(2);
+
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td data-label="Image">${card.img ? `<img src="${card.img}" alt="${card.name}" class="thumb-img">` : 'N/A'}</td>
-            <td data-label="Set">${card.set_name}</td>
-            <td data-label="Number">${card.number || '—'}</td>
-            <td data-label="Quantity">${card.quantity || 0}</td>
-            <td data-label="Price">${card.price}</td>
+            <td data-label="Card Name">
+                ${card.name || 'N/A'}
+                ${card.img ? `<br><img src="${card.img}" alt="${card.name}" class="thumb-img">` : ''}
+            </td>
+            <td data-label="Set Name">${card.set_name || '—'}</td>
+            <td data-label="Card Number">${card.number || '—'}</td>
+            <td data-label="Price">$${displayPrice}</td>
             <td class="actions">
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn" data-set="${card.set_name}" data-number="${card.number}">Delete</button>
+                <button class="delete-btn" data-set="${card.set_name || ''}" data-number="${card.number || ''}">Delete</button>
             </td>
         `;
         container.appendChild(row);
     });
 }
 
+// --------------------------
 // Filter/search function
+// --------------------------
 function filterItems(category = "all", query = "") {
     query = query.toLowerCase();
     const filtered = cards.filter(card => {
         const matchesCategory = category === "all" || card.category === category;
-        const matchesSearch = card.name.toLowerCase().includes(query) || card.set_name.toLowerCase().includes(query);
+        const matchesSearch = (card.name || "").toLowerCase().includes(query) ||
+            (card.set_name || "").toLowerCase().includes(query);
         return matchesCategory && matchesSearch;
     });
     renderItems(filtered, "inventory-body");
@@ -105,8 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
             preview.name.textContent = inputs.name.value || "Card Name";
             preview.set.textContent = inputs.set.value || "Set";
             preview.number.textContent = inputs.number.value || "—";
-            preview.price.textContent = inputs.price.value ? `$${parseFloat(inputs.price.value).toFixed(2)}` : "$0.00";
-            preview.market.textContent = inputs.market.value ? `$${parseFloat(inputs.market.value).toFixed(2)}` : "$0.00";
+
+            const priceVal = parseFloat(inputs.price.value) || 0;
+            const marketVal = parseFloat(inputs.market.value) || 0;
+            preview.price.textContent = `$${priceVal.toFixed(2)}`;
+            preview.market.textContent = `$${marketVal.toFixed(2)}`;
+
             preview.img.src = inputs.img.value.trim() || "/static/images/preview-image.jpg";
             preview.img.onerror = () => { preview.img.src = "/static/images/preview-image.jpg"; };
             preview.img.alt = inputs.name.value || "Card preview";
@@ -179,7 +193,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
-
 
 });
