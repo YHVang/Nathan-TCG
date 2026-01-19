@@ -69,28 +69,19 @@ def add_card():
 @app.route("/admin/delete_card", methods=["POST"])
 def delete_card():
     data = request.get_json()
-    set_name = data.get("set")
-    number = data.get("number")  # this can be empty string or None
+    card_id = data.get("id")
 
-    if not set_name:
-        return jsonify({"success": False, "error": "No set_name provided"}), 400
+    if not card_id:
+        return jsonify({"success": False, "error": "No card ID provided"}), 400
 
     try:
         conn = get_connection()
         cur = conn.cursor()
 
-        if not number:  # treat empty string or None as NULL
-            cur.execute("""
-                DELETE FROM cards
-                WHERE set_name = %s AND number IS NULL
-                RETURNING id;
-            """, (set_name,))
-        else:
-            cur.execute("""
-                DELETE FROM cards
-                WHERE set_name = %s AND number = %s
-                RETURNING id;
-            """, (set_name, number))
+        cur.execute(
+            "DELETE FROM cards WHERE id = %s RETURNING id;",
+            (card_id,)
+        )
 
         deleted = cur.fetchone()
         if not deleted:
@@ -99,33 +90,44 @@ def delete_card():
         conn.commit()
         cur.close()
         conn.close()
+
         return jsonify({"success": True, "id": deleted[0]})
+
     except Exception as e:
         print("Failed to delete card:", e)
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 
+@app.route("/item")
+def item():
+    card_id = request.args.get("id")
 
+    if not card_id:
+        return "Missing card ID", 400
 
-@app.route("/item") 
-def item(): 
-    set_name = request.args.get("set") 
-    card_number = request.args.get("number") 
     try:
-         conn = get_connection() 
-         cur = conn.cursor(cursor_factory=RealDictCursor) 
-         # Query the DB for the specific card 
-         cur.execute(""" SELECT * FROM cards WHERE set_name = %s AND number = %s LIMIT 1; """, (set_name, card_number)) 
-         card = cur.fetchone() 
-         cur.close() 
-         conn.close() 
-         if card: return render_template("item.html", card_json=card) 
-         else: 
-            return "Item not found", 404 
-    except Exception as e: 
-         print("DB query failed:", e) 
-         return "Internal server error", 500
+        conn = get_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+
+        cur.execute(
+            "SELECT * FROM cards WHERE id = %s",
+            (card_id,)
+        )
+
+        card = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if not card:
+            return "Item not found", 404
+
+        return render_template("item.html", card_json=card)
+
+    except Exception as e:
+        print("DB query failed:", e)
+        return "Internal server error", 500
+
 
 
 @app.route("/cart")

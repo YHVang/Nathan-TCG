@@ -36,7 +36,7 @@ function renderItems(items, containerId) {
             <td data-label="Price">$${displayPrice}</td>
             <td class="actions">
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn" data-set="${card.set_name || ''}" data-number="${card.number || ''}">Delete</button>
+                <button class="delete-btn" data-id="${card.id}">Delete</button>
             </td>
         `;
         container.appendChild(row);
@@ -169,20 +169,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------
     document.addEventListener("click", async (e) => {
         if (e.target && e.target.classList.contains("delete-btn")) {
-            const setName = e.target.getAttribute("data-set");
-            const number = e.target.getAttribute("data-number");
+            const cardId = e.target.getAttribute("data-id");
 
-            if (!confirm(`Are you sure you want to delete ${setName} - ${number}?`)) return;
+            if (!cardId) {
+                console.error("Delete clicked but no card ID found");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete this card?")) return;
 
             try {
                 const res = await fetch("/admin/delete_card", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ set: setName, number: number })
+                    body: JSON.stringify({ id: cardId })
                 });
+
                 const result = await res.json();
+
                 if (result.success) {
-                    const index = cards.findIndex(c => c.set_name === setName && c.number === number);
+                    const index = cards.findIndex(c => String(c.id) === String(cardId));
                     if (index > -1) cards.splice(index, 1);
                     renderItems(cards, "inventory-body");
                 } else {
@@ -193,5 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
 
 });

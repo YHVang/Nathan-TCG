@@ -45,14 +45,14 @@ function renderItems(items, containerId, isTable = false) {
         // Render card grid for index.html
         items.forEach(card => {
             const cardHTML = `
-                <a href="/item?set=${encodeURIComponent(card.set_name)}&number=${encodeURIComponent(card.number)}">
+                <a href="/item?id=${card.id}">
                     <div class="card">
                         <img class="card-img" src="${card.img}" alt="${card.name}">
                         <div class="card-info">
                             <div class="card-details">
                                 <h3 class="card-name">${card.name}</h3>
                                 <p class="card-set">${card.set_name}</p>
-                                <p class="card-number">${card.number}</p>
+                                <p class="card-number">${card.number ? card.number : '—'}</p>
                             </div>
                             <div class="card-prices">
                                 <p class="price"><strong>Price:</strong> ${card.price}</p>

@@ -67,7 +67,7 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 * [x] Add **card detail pages**
 * [x] Optimize **card grid layout**
 * [x] Improve **footer and navigation**
-* [ ] Add and delete cards by admin `admin.html` via METHOD to DB
+* [X] Add and delete cards by admin `admin.html` via METHOD to DB
 * [ ] Add upload image functionality. 
 * [ ] Cart page `cart.html`
 
