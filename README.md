@@ -74,11 +74,11 @@ This shows the flow from a user browsing cards to completing a purchase, and the
 
 ### Backend / Server
 
-* [ ] Integrate **database** for cards, users, and orders
+* [X] Integrate **database** for cards, users, and orders
 * [ ] Implement **user authentication** (login/register)
 * [ ] Add **admin panel** for card management
-* [ ] Serve card data dynamically with **Flask routes/templates**
-* [ ] Create **API endpoints** for search and filtering
+* [X] Serve card data dynamically with **Flask routes/templates**
+* [-] Create **API endpoints** for search and filtering
 * [ ] Create user login **user.html/link to database** 
 
 ### E-commerce / Payments
