@@ -1,4 +1,33 @@
 // --------------------------
+// Cart setup (available across all pages)
+// --------------------------
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateCartBadge() {
+    const badge = document.querySelector(".cart .badge");
+    if (badge) badge.textContent = cart.length;
+}
+
+function addToCart(card) {
+    cart.push(card);
+    saveCart();
+    updateCartBadge();
+}
+
+function removeFromCart(cardId) {
+    cart = cart.filter(c => c.id !== cardId);
+    saveCart();
+    updateCartBadge();
+}
+
+// Initialize badge on page load
+updateCartBadge();
+
+// --------------------------
 // Menu toggle (both pages)
 // --------------------------
 function menuFunction(x) {
@@ -45,25 +74,40 @@ function renderItems(items, containerId, isTable = false) {
         // Render card grid for index.html
         items.forEach(card => {
             const cardHTML = `
-                <a href="/item?id=${card.id}">
-                    <div class="card">
-                        <img class="card-img" src="${card.img}" alt="${card.name}">
-                        <div class="card-info">
-                            <div class="card-details">
-                                <h3 class="card-name">${card.name}</h3>
-                                <p class="card-set">${card.set_name}</p>
-                                <p class="card-number">${card.number ? card.number : '—'}</p>
-                            </div>
-                            <div class="card-prices">
-                                <p class="price"><strong>Price:</strong> ${card.price}</p>
-                                <p class="market-price"><strong>Market:</strong> ${card.market_price}</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            `;
+        <div class="card">
+            <a href="/item?id=${card.id}">
+                <img class="card-img" src="${card.img}" alt="${card.name}">
+            </a>
+            <div class="card-info">
+                <div class="card-details">
+                    <h3 class="card-name">${card.name}</h3>
+                    <p class="card-set">${card.set_name}</p>
+                    <p class="card-number">${card.number ? card.number : '—'}</p>
+                </div>
+                <div class="card-prices">
+                    <p class="price"><strong>Price:</strong> ${card.price}</p>
+                    <p class="market-price"><strong>Market:</strong> ${card.market_price}</p>
+                </div>
+            </div>
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart-btn" data-id="${card.id}">Add to Cart</button>
+        </div>
+    `;
             container.insertAdjacentHTML("beforeend", cardHTML);
         });
+
+        // Attach event listeners to all add-to-cart buttons
+        document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const cardId = parseInt(btn.getAttribute("data-id"));
+                const card = cards.find(c => c.id === cardId);
+                if (card) {
+                    addToCart(card);
+                    alert(`${card.name} added to cart!`);
+                }
+            });
+        });
+
     }
 }
 

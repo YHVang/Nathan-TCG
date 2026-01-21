@@ -203,7 +203,7 @@ Card Grid
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: 450px;
 }
 
 .card:hover {
@@ -273,7 +273,7 @@ Card Grid
 }
 
 .price {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #2b2d42;
 }
@@ -381,4 +381,19 @@ Responsive Styles
         max-width: 100%;
         height: auto;
     }
+}
+
+/* Styling for add to cart button */
+.add-to-cart-btn {
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: #ff9800;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #e68900;
 }

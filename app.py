@@ -6,8 +6,6 @@ import config
 
 app = Flask(__name__)
 
-# cards = load_cards_from_db()
-
 
 @app.route("/")
 def home():

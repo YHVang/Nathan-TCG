@@ -4,48 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathan's TCG</title>
-    <!-- Link CSS from static folder -->
+    <title>Nathan's TCG - Cart</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
+<body class="cart-page">
 
     <!-- Top Header -->
     <header class="site-header">
         <h1>TCG</h1>
     </header>
 
-    <!-- Tab Bar -->
+    <!-- Navbar -->
     <nav class="tab-bar">
         <div class="tab-links">
-            <a class="active" href="#" data-tab="all">All</a>
-            <a href="#" data-tab="singles">Singles</a>
-            <a href="#" data-tab="sealed">Sealed Products</a>
+            <a href="/home"><i class="fa fa-home w3-xlarge"></i></a>
+            <a class="active">Cart</a>
         </div>
-
-        <form action="/search" method="get">
-            <label for="search-input">Search:</label>
-            <input type="search" id="search-input" name="q" placeholder="Enter your search" />
-            <button type="submit" class="search-button">Search</button>
-        </form>
+        <div class="right-side-tab">
+            <div>
+                <a class="cart" href="/cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="badge">0</span>
+                </a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Search Results Section -->
-    <section class="results-section">
-        <h2 class="results-title">Search Results</h2>
-        <div id="card-container" class="card-grid">
-            <!-- Cards will be dynamically rendered by script.js -->
+    <!-- Cart Section -->
+    <section class="results-section cart-section">
+        <h2>Your Cart</h2>
+        <div id="cart-container" class="cart-grid">
+            <!-- Cart items will be rendered here by script.js -->
+        </div>
+
+        <div id="cart-summary" style="margin-top: 20px; text-align:right;">
+            <p>Total: $<span id="total-amount">0.00</span></p>
+            <button id="checkout-button">Checkout</button>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
+        &copy; 2025 Nathan's TCG
     </footer>
 
-    <!-- Link JS from static folder -->
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 </body>
 
 </html>
