@@ -119,6 +119,31 @@ Admin Card Preview
 }
 
 /* ===============================
+Flex row for Add Card form and Preview
+================================*/
+.add-preview-row {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    align-items: flex-start;
+    /* aligns form and preview at the top */
+    flex-wrap: wrap;
+    /* makes it responsive on smaller screens */
+}
+
+.add-preview-row .add-card-container {
+    flex: 1 1 500px;
+    /* form grows but has a min width */
+}
+
+.add-preview-row .preview-container {
+    flex: 0 0 250px;
+    /* preview has fixed width matching your card */
+}
+
+
+/* ===============================
 Inventory
 ================================*/
 .inventory-container {

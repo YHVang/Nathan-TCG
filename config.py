@@ -3,8 +3,8 @@
 # Local development
 DB_HOST = "localhost"
 DB_NAME = "tcg_website_db"
-DB_USER = "tcg_website_db"
-DB_PASS = "Someone123!"
+DB_USER = "tcg_website_user"
+DB_PASS = "password"
 DB_PORT = 5432
 
 # AWS RDS (example)

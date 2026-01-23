@@ -8,7 +8,7 @@ function menuFunction(x) {
 }
 
 // --------------------------
-// Generic render function
+// Render inventory items
 // --------------------------
 function renderItems(items, containerId) {
     const container = document.getElementById(containerId);
@@ -111,6 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
             img: document.getElementById("card-img")
         };
 
+        const fileInput = document.getElementById("card-img-file");
+
         function updatePreview() {
             preview.name.textContent = inputs.name.value || "Card Name";
             preview.set.textContent = inputs.set.value || "Set";
@@ -121,37 +123,43 @@ document.addEventListener("DOMContentLoaded", () => {
             preview.price.textContent = `$${priceVal.toFixed(2)}`;
             preview.market.textContent = `$${marketVal.toFixed(2)}`;
 
-            preview.img.src = inputs.img.value.trim() || "/static/images/preview-image.jpg";
+            if (fileInput && fileInput.files[0]) {
+                preview.img.src = URL.createObjectURL(fileInput.files[0]);
+            } else {
+                preview.img.src = inputs.img.value.trim() || "/static/images/preview-image.jpg";
+            }
+
             preview.img.onerror = () => { preview.img.src = "/static/images/preview-image.jpg"; };
             preview.img.alt = inputs.name.value || "Card preview";
         }
 
         Object.values(inputs).forEach(input => input?.addEventListener("input", updatePreview));
+        if (fileInput) fileInput.addEventListener("change", updatePreview);
         updatePreview();
 
         addCardForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const newCard = {
-                name: inputs.name.value,
-                set_name: inputs.set.value,
-                number: inputs.number.value || "",
-                quantity: parseInt(inputs.quantity.value) || 0,
-                price: parseFloat(inputs.price.value) || 0,
-                category: document.getElementById("card-category").value || "all",
-                img: inputs.img.value || "",
-                market_price: parseFloat(inputs.market.value) || 0
-            };
-
             try {
-                const res = await fetch("/admin/add_card", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(newCard)
-                });
+                const formData = new FormData();
+                formData.append("name", inputs.name.value);
+                formData.append("set_name", inputs.set.value);
+                formData.append("number", inputs.number.value || "");
+                formData.append("quantity", parseInt(inputs.quantity.value) || 0);
+                formData.append("price", parseFloat(inputs.price.value) || 0);
+                formData.append("market_price", parseFloat(inputs.market.value) || 0);
+                formData.append("category", document.getElementById("card-category").value || "all");
+
+                if (fileInput && fileInput.files[0]) {
+                    formData.append("image_file", fileInput.files[0]);
+                }
+                formData.append("image_url", inputs.img.value || "");
+
+                const res = await fetch("/admin/add_card", { method: "POST", body: formData });
                 const result = await res.json();
-                if (result.success) {
-                    cards.push(newCard);
+
+                if (result.success && result.card) {
+                    cards.push(result.card);
                     renderItems(cards, "inventory-body");
                     addCardForm.reset();
                     updatePreview();
@@ -160,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (err) {
                 console.error("Add card error:", err);
+                alert("Failed to add card due to network or server error.");
             }
         });
     }
@@ -170,11 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", async (e) => {
         if (e.target && e.target.classList.contains("delete-btn")) {
             const cardId = e.target.getAttribute("data-id");
-
-            if (!cardId) {
-                console.error("Delete clicked but no card ID found");
-                return;
-            }
+            if (!cardId) return;
 
             if (!confirm("Are you sure you want to delete this card?")) return;
 
@@ -184,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ id: cardId })
                 });
-
                 const result = await res.json();
 
                 if (result.success) {
@@ -199,6 +203,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
-
 });
