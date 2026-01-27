@@ -1,15 +1,11 @@
-# config.py
+import os
+from dotenv import load_dotenv
 
-# Local development
-DB_HOST = "localhost"
-DB_NAME = "tcg_website_db"
-DB_USER = "tcg_website_user"
-DB_PASS = "password"
-DB_PORT = 5432
+# Load .env ONLY for local development
+load_dotenv()
 
-# AWS RDS (example)
-# DB_HOST = "tcg-website-db.xxxxx.us-east-1.rds.amazonaws.com"
-# DB_NAME = "masteruser"
-# DB_USER = "masteruser"
-# DB_PASS = "YourAWSPassword"
-# DB_PORT = 5432
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_NAME = os.getenv("DB_NAME", "tcg_website_db")
+DB_USER = os.getenv("DB_USER", "tcg_website_user")
+DB_PASS = os.getenv("DB_PASS", "password")
+DB_PORT = int(os.getenv("DB_PORT", 5432))

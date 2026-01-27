@@ -1,2 +1,5 @@
 secrets.txt
 venv/
+.env
+__pycache__/
+*.pyc
