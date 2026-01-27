@@ -200,13 +200,13 @@ def error():
 # DB helpers
 # -----------------------------
 def get_connection():
-    return psycopg2.connect(
-        host=config.DB_HOST,
-        database=config.DB_NAME,
-        user=config.DB_USER,
-        password=config.DB_PASS,
-        port=config.DB_PORT,
-    )
+    if isinstance(config.DB_CONFIG, str):
+        # DATABASE_URL from Render
+        return psycopg2.connect(config.DB_CONFIG)
+    else:
+        # Local DB config dictionary
+        return psycopg2.connect(**config.DB_CONFIG)
+
 
 
 def load_cards_from_db():
