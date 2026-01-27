@@ -59,7 +59,7 @@
             <form id="add-card-form">
                 <div class="form-row">
                     <input type="text" id="card-name" placeholder="Card Name" required>
-                    <input type="text" id="card-set" placeholder="Set Name" required>
+                    <input type="text" id="card-set" placeholder="Set Name">
                     <input type="text" id="card-number" placeholder="Card Number">
                     <input type="number" id="card-quantity" placeholder="Quantity" min="0">
                     <input type="number" id="card-price" placeholder="Price" step="0.01" min="0" required>
@@ -77,8 +77,17 @@
                 </div>
                 <button type="submit">Add Card</button>
             </form>
+            <div class="add-card-tips">
+                <p>☆ Reqirements: Card Name and Price</p>
+                <p>☆ Tip: Make sure the card name matches exactly with the set name to avoid duplicates.</p>
+                <p>☆ You can upload an image or paste a direct URL for the card image.</p>
+                <p>☆ Fill in the form fields to see a live preview of the card here.</p>
+            </div>
+
+
         </div>
         <div class="preview-container">
+            <h2>Live Preview</h2>
             <div class="card-preview card">
                 <img id="preview-img" class="card-img" src="/static/images/preview-image.jpg" alt="Card preview">
 

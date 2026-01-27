@@ -44,14 +44,23 @@ Admin Page
     background-color: #0056b3;
 }
 
+.add-card-tips {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+
 /* ===============================
 Admin Card Preview
 ================================*/
 
 .preview-container {
-    margin: 25px 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0;
 }
 
 .card-preview {
